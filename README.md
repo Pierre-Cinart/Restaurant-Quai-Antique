@@ -8,12 +8,14 @@ Le restaurant quai antique est un restaurant fictif
 ### Backend (PHP)
 
 1. Assurez-vous d'avoir [Composer](https://getcomposer.org/) installé sur votre machine.
+
 2. À la racine du projet exécutez :
     ```bash
     composer install
     ``` 
     pour installer les dépendances PHP.
-3. Créez un fichier à la racine du projet  `.env.` . Mettez à jour les variables d'environnement appropriées telles que `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, etc.
+
+3. Créez un fichier `.env.` à la racine du projet . Mettez à jour les variables d'environnement appropriées telles que `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, etc.
 
    Exemple de fichier `.env` :
    ```env
@@ -40,6 +42,8 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 
 2. Accédez à l'application dans votre navigateur à l'adresse indiquée (généralement http://localhost:8080).
 
+3. Pour l envoie de mail en local , créez un compte sur mailtrap : https://mailtrap.io/ et récupérez vos informations de connexions
+
 ## Configurations de connexion
 
 ### Backend (PHP)
@@ -50,7 +54,14 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 - **Nom d'utilisateur:** Le nom d'utilisateur pour se connecter à la base de données (DB_USERNAME dans le fichier `.env`).
 - **Mot de passe:** Le mot de passe pour se connecter à la base de données (DB_PASSWORD dans le fichier `.env`).
 
-### Frontend (Vue.js)
+### Mailtrap (Test d'envoi de mails)
+
+- **Host:** L'adresse SMTP de Mailtrap (SMTP_HOST dans le fichier `.env`).
+- **Port:** Le port SMTP de Mailtrap (SMTP_PORT dans le fichier `.env`).
+- **Nom d'utilisateur:** Le nom d'utilisateur SMTP de Mailtrap (SMTP_USERNAME dans le fichier `.env`).
+- **Mot de passe:** Le mot de passe SMTP de Mailtrap (SMTP_PASSWORD dans le fichier `.env`).
+
+### Frontend 
 
 - **URL de l'API Backend:** Configurer l'URL des API backend dans le fichier `.env` 
 
@@ -58,6 +69,15 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
    ```env
    API_URL=http://localhost/back/api
    ```
+
+
+
+
+
+
+
+
+
 
 
 
