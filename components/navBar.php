@@ -1,6 +1,16 @@
 <?php
 session_start();
 
+// Charger la variables d'environnement pour le chemin vers les api à partir du fichier .env
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenvPath = __DIR__ . '/../';
+
+if (file_exists($dotenvPath . '.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable($dotenvPath);
+    $dotenv->load();
+  // Utiliser la variable d'environnement
+  $apiUrl = $_ENV['API_URL'];
+}
 ?>
 
 <!DOCTYPE html>
