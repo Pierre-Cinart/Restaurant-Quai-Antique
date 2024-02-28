@@ -11,7 +11,7 @@ session_start();
     <!-- cdn bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- fichier style -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title><?php echo $pageTitle;?></title>
     <title>Document</title>
 </head>
@@ -23,9 +23,9 @@ session_start();
       <div class="container-fluid">
         <!-- Logo à gauche -->
         <div>
-          <a href="index.php" class="navbar-brand logo">
+          <a href="home.php" class="navbar-brand">
             <!-- Insérez votre logo ici -->
-            <img src="@/assets/logo.png" alt="logo restaurant" style="border-radius: 50%;">
+            <img src="../images/logo.png" alt="logo restaurant" class = "logo">
           </a>
         </div>
 
@@ -35,11 +35,12 @@ session_start();
         </button>
 
         <!-- Liens de navigation à droite -->
-        <div :class="{'show': navbarOpen}" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+
           <ul class="navbar-nav ms-auto">
             <!-- Lien vers la page d'accueil -->
             <li class="nav-item">
-              <a href="index.php" class="nav-link active">Accueil</a>
+              <a href="home.php" class="nav-link active">Accueil</a>
             </li>
             <!-- Lien vers la page de consultation de la carte des menus -->
             <li class="nav-item">
@@ -86,6 +87,7 @@ function toggleNavbar() {
   const navbar = document.getElementById('navbarSupportedContent');
   navbar.classList.toggle('show');
 }
+
 
 function logout() {
   // Redirection vers la page de déconnexion

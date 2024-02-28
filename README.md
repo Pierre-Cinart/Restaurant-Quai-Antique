@@ -56,7 +56,7 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 
    Exemple de fichier `.env` :
    ```env
-   APP_API_URL=http://localhost/back/api
+   API_URL=http://localhost/back/api
    ```
 
 
