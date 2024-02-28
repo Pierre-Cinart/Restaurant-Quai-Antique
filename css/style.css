@@ -1,0 +1,33 @@
+/*styles globals */
+*{
+    box-sizing: border-box;
+}
+/* Styles CSS pour la barre de navigation */
+header {
+  font-size: 25px;
+  font-family: 'Dancing Script', cursive;
+  user-select: none;
+  border: solid 2px #523e15;
+}
+.logo {
+  width: 80px;
+}
+.nav-item {
+  margin: 10px;
+}
+.nav-item:hover {
+  font-weight: bolder;
+}
+.nav-link {
+  color: rgb(40, 105, 34);
+}
+/* Ajoutez une règle de media query pour les écrans plus petits */
+@media (max-width: 767px) {
+  .nav-item {
+    width: 100%;
+  }
+}
+
+.bg-navBar {
+  background-color: #ddae48b9; 
+}
