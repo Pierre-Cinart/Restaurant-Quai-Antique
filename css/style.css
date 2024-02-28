@@ -1,6 +1,17 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
 /*styles globals */
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/* background */
+body {
+  background-image: url('../images/bg_home.jpg');
+  background-size: cover;
+  font-family: 'Dancing Script', cursive;
 }
 /* Styles CSS pour la barre de navigation */
 header {
@@ -9,6 +20,7 @@ header {
   user-select: none;
   border: solid 2px #523e15;
 }
+/* navbar */
 .logo {
   width: 80px;
 }
@@ -30,4 +42,158 @@ header {
 
 .bg-navBar {
   background-color: #ddae48b9; 
+}
+/* carousel */
+#imageCarousel {
+  padding: 10px;
+  max-width: 500px;
+  max-height: 250px;
+  margin: 15px auto 15px auto;
+ 
+  position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-control-prev {
+  left: -45px; /* Ajustez la position à gauche */
+}
+
+.carousel-control-next {
+  right: -45px; /* Ajustez la position à droite */
+}
+
+.carousel-inner .carousel-item {
+  display: none;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-inner .carousel-item.active {
+  display: block;
+  opacity: 1;
+}
+
+.carousel-item-content {
+  position: relative;
+}
+
+.carousel-item-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  display: none;
+}
+
+.carousel-item-content:hover .carousel-item-overlay {
+  display: block;
+}
+.carousel-item-content img {
+ 
+  max-height: 200px;
+  margin: auto;
+  object-fit: cover; /* Redimensionne l'image pour remplir complètement le conteneur */
+  border-radius: 5px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item-content img:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* bouton de reservation */
+.reservation_div{
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.445);
+  padding: 5px; 
+}
+.reservation_div a{
+  width : 200px;
+ margin: auto;
+ padding: 5px;
+ text-align: center;
+ border: solid 1px black;
+ border-radius: 5px;
+}
+
+/* footer */
+.reserv {
+  font-size: 22px;
+  color: aliceblue;
+  text-align: center;
+  margin: auto;
+  text-decoration: underline;
+  width: 33%;
+}
+
+.reserv .nav-link:hover{
+  color: blue;
+}
+
+.contact {
+  margin-left: 10px;
+  border-right: solid 1px white;
+  width: 33%;
+}
+
+.horraires {
+  text-align: left;
+  border-left: solid 1px white;
+  width: 33%;
+}
+
+.horraires ul li {
+  list-style: none;
+  line-height: 33px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.footer_box {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  margin-top: 15px;
+  width: 100%;
+}
+
+@media screen and (max-width: 760px) {
+  .footer_box {
+    flex-wrap: wrap;
+  }
+  .contact,
+  .reserv,
+  .horraires {
+    text-align: center;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid white;
+  }
+  .contact ul li {
+    list-style: none;
+  }
+  .reserv .nav-link:hover{
+  color: white;
+}
+
 }

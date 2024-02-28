@@ -26,13 +26,13 @@ try {
         foreach ($data as &$image) {
             switch ($image['category_id']) {
                 case 1:
-                    $image['path'] = '/images/starters/' . $image['picture_name'];
+                    $image['path'] = 'images/starters/' . $image['picture_name'];
                     break;
                 case 2:
-                    $image['path'] = '/images/dishes/' . $image['picture_name'];
+                    $image['path'] = 'images/dishes/' . $image['picture_name'];
                     break;
                 case 3:
-                    $image['path'] = '/images/desserts/' . $image['picture_name'];
+                    $image['path'] = 'images/desserts/' . $image['picture_name'];
                     break;
                 default:
                     $image['path'] = ''; // Par défaut, path est une chaîne vide
