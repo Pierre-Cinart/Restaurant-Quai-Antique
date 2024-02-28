@@ -13,17 +13,7 @@ Le restaurant quai antique est un restaurant fictif
     composer install
     ``` 
     pour installer les dépendances PHP.
-3. À la racine de votre projet, exécutez 
-    ```bash
-    composer require phpmailer/phpmailer
-    ``` 
-    pour installer PHPMailer, une bibliothèque pour l'envoi d'e-mails en PHP
-4. À la racine de votre projet, exécutez 
-    ```bash
-    composer require vlucas/phpdotenv
-    ``` 
-    pour pouvoir utiliser le fichier .env
-5. Créez un fichier à la racine du projet  `.env.` . Mettez à jour les variables d'environnement appropriées telles que `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, etc.
+3. Créez un fichier à la racine du projet  `.env.` . Mettez à jour les variables d'environnement appropriées telles que `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, etc.
 
    Exemple de fichier `.env` :
    ```env
@@ -35,41 +25,20 @@ Le restaurant quai antique est un restaurant fictif
    ```
 
 4. Exécutez votre fichier SQL pour créer et alimenter la base de données.
-5. Afin d avoir des données utilisateur pour tester les connexions , rendez vous à l adresse '"adresse_de_votre_serveur/back/Exemple/AddUsers.php'.
+
+5. Afin d avoir des données utilisateur pour tester les connexions , rendez vous à l adresse '"adresse_de_votre_serveur/back/UsersAdd/AddUsers.php'.
 Celui ci execute un script inscrivant un super admin , un admin et un client avec le mot de passe hashé
 vous pouvez modifier facilement les informations du fichier avant execution si désiré .
 Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 
-### Frontend (Vue.js)
+### Frontend (HTML , CSS , JavaScript)
 
-1. Assurez-vous d'avoir [Node.js](https://nodejs.org/) installé sur votre machine.
-2. Rendez vous dans le dossier front , installez Vue.js en exécutant la commande suivante dans votre terminal :
-
-    ```bash
-    npm install -g vue
-    ```
-
-3. Puis installez Vue CLI en exécutant la commande suivante :
-
-    ```bash
-    npm install -g @vue/cli
-    ```
-
-4. Ensuite installez Bootstrap en exécutant la commande suivante :
-    ```bash
-    npm install bootstrap
-    ```
-5. Enfin installer les dépendances Vue.js , exécutez :
-
-    ```bash
-    npm install 
-    ```
 
 ## Utilisation du projet
 
 1. Assurez-vous que le backend est en cours d'exécution avec les configurations correctes.
-2. Exécutez le frontend avec `npm run serve` dans le dossier `front`.
-3. Accédez à l'application dans votre navigateur à l'adresse indiquée (généralement http://localhost:8080).
+
+2. Accédez à l'application dans votre navigateur à l'adresse indiquée (généralement http://localhost:8080).
 
 ## Configurations de connexion
 
@@ -83,11 +52,11 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 
 ### Frontend (Vue.js)
 
-- **URL de l'API Backend:** Assurez-vous que l'URL de l'API backend est correctement configurée dans le fichier `.env` du frontend.
+- **URL de l'API Backend:** Configurer l'URL des API backend dans le fichier `.env` 
 
    Exemple de fichier `.env` :
    ```env
-   VUE_APP_API_URL=http://localhost/back/api
+   APP_API_URL=http://localhost/back/api
    ```
 
 
