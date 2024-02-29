@@ -10,6 +10,7 @@ CREATE TABLE  users (
     number_of_guests INT(2) ,
     picture VARCHAR(255),
     jwt VARCHAR(255),
+    confirm ENUM('n', 'y') DEFAULT 'n' NOT NULL,
     role ENUM('admin', 'client','super admin') DEFAULT 'client' NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,

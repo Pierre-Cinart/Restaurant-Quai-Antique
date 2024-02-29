@@ -11,8 +11,8 @@ require_once ('../components/navBar.php');
     <!-- Formulaire de connexion -->
 <form action="../back/api/login.php" method="POST">
     <h2>Connexion</h2>
-    <label for="e-mail">Nom d'utilisateur :</label>
-    <input type="mail" id="e-mail" name="e-mail" required>
+    <label for="email">Nom d'utilisateur :</label>
+    <input type="email" id="email" name="email" required>
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
     <button type="submit">Se connecter</button>
@@ -21,12 +21,12 @@ require_once ('../components/navBar.php');
 <!-- Formulaire d'inscription -->
 <form action="../back/api/register.php" method="POST">
     <h2>Inscription</h2>
-    <label for="first_name">Nom d'utilisateur :</label>
+    <label for="first_name">Prénom :</label>
     <input type="text" id="first_name" name="first_name" required>
-    <label for="last_name">Nom d'utilisateur :</label>
+    <label for="last_name">Nom  :</label>
     <input type="text" id="last_name" name="last_name" required>
-    <label for="mail">Nom d'utilisateur :</label>
-    <input type="mail" id="mail" name="mail" required>
+    <label for="mail">mail :</label>
+    <input type="email" id="mail" name="mail" required>
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
     <label for="confirm_password">Confirmer le mot de passe :</label>

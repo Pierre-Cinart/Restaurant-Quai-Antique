@@ -17,17 +17,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inclure le fichier bdd.php pour établir une connexion à la base de données
     require_once 'bdd.php';
-    include_once 'login_attemps.php';
-    // Récupérer les données envoyées depuis le formulaire
-    $data = json_decode(file_get_contents("php://input"));
+   // include_once 'login_attemps.php'; à développer
+    
+    // Initialiser la réponse
+    $response = [];
 
     // Récupérer l'email et le mot de passe
-    $email = $data->email;
-    $password = $data->password;
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
+    $password = isset($_POST['password']) ? $_POST['password'] : null;
 
-    ///--------------- mettre un exit si le nombre de requete est supérieur à 5 ----- login-attemps
+    // Vérifier si les données du formulaire sont présentes
+    if (!$email || !$password) {
+        http_response_code(400); // Bad Request
+        echo json_encode(["error" => "Veuillez fournir une adresse e-mail et un mot de passe"]);
+        exit();
+    }
 
-    //  requête pour récupérer l'utilisateur avec l email
+    ///--------------- mettre un exit si le nombre de requête est supérieur à 5 ----- login-attempts
+
+    // Requête pour récupérer l'utilisateur avec l'email
     $query = "SELECT * FROM users WHERE email = :email";
     $statement = $pdo->prepare($query);
     $statement->bindParam(':email', $email);
@@ -37,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si l'utilisateur existe et si le mot de passe correspond
     if ($user && password_verify($password, $user['password'])) {
         // Authentification réussie
-        //------------- delete les tentatives ----- login-attemps
+        //------------- delete les tentatives ----- login-attempts
 
         // Générer le JWT
         $jwt = bin2hex(random_bytes(32)); // Utilisez 32 octets pour obtenir 64 caractères hexadécimaux
-       
+        
         // Enregistrer le JWT dans la base de données pour cet utilisateur
         $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
         $statementUpdateJWT = $pdo->prepare($queryUpdateJWT);
@@ -49,42 +57,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $statementUpdateJWT->bindParam(':user_id', $user['user_id']);
         $statementUpdateJWT->execute();
 
-        //camouflage des roles
-        
-        function assignRoleCode($role) {
-            switch ($role) {
-                case 'client':
-                    return 321;
-                case 'admin':
-                    return 555;
-                case 'super admin':
-                    return 745;
-                default:
-                    return 0; // Code de rôle par défaut si le rôle n'est pas reconnu
-            }
-        }
-        
-        // Utilisation de la fonction pour attribuer le code de rôle
-        $roleCode = assignRoleCode($user['role']);
-        
-        // Répondre avec les informations de l'utilisateur et le JWT
-        $response = (object) [
+        // Enregistrer les données en variable de session
+    
+        $_SESSION["id"] = $user['user_id'];
+        $_SESSION["firstname"] = $user['first_name'];
+        $_SESSION["lastname"] = $user['last_name'];
+        $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
+        $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
+
+        // Ajouter les données de l'utilisateur à la réponse
+        $response = [
             "id" => $user['user_id'],
-            "role" => $roleCode, // Utilisation du code de rôle attribué
             "firstname" => $user['first_name'],
             "lastname" => $user['last_name'],
             "fullname" => $user['first_name'] . " " . $user['last_name'],
-            "jwt" => $jwt // Ajouter le JWT à la réponse
+            "jwt" => $jwt
         ];
     } else {
         // Authentification échouée
-        // ------------incrementer les tentatives ----- login-attemps
-        $response = null;
+        // ------------incrementer les tentatives ----- login-attempts
+        // Vous pouvez gérer cela ici en fonction de votre implémentation
+        http_response_code(401); // Unauthorized
+        $response = ["error" => "Identifiants incorrects"];
     }
 
     // Envoyer la réponse au format JSON
-    // Enregistrer le JWT dans le localStorage
-    
     echo json_encode($response);
     
 } else {

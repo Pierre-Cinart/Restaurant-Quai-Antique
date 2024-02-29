@@ -24,6 +24,7 @@ body {
 }
 /* Styles CSS pour la barre de navigation */
 header {
+  width: 100%;
   font-size: 25px;
   font-family: 'Dancing Script', cursive;
   user-select: none;
@@ -42,12 +43,7 @@ header {
 .nav-link {
   color: rgb(40, 105, 34);
 }
-/* Ajoutez une règle de media query pour les écrans plus petits */
-@media (max-width: 767px) {
-  .nav-item {
-    width: 100%;
-  }
-}
+
 
 .bg-navBar {
   background-color: #ddae48b9; 
@@ -69,11 +65,11 @@ header {
 }
 
 .carousel-control-prev {
-  left: -45px; /* Ajustez la position à gauche */
+  left: -45px; 
 }
 
 .carousel-control-next {
-  right: -45px; /* Ajustez la position à droite */
+  right: -45px; 
 }
 
 .carousel-inner .carousel-item {
@@ -119,14 +115,35 @@ header {
   opacity: 0.8;
   cursor: pointer;
 }
-
-.btn-reserv{
-  color:white;
+/* bouton de reservation */
+.reservation_div{
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.445);
+  padding: 5px; 
+}
+.reservation_div a{
+  width : 200px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 400;
+ margin: auto;
+ padding: 5px;
+ text-align: center;
+ border: solid 1px aliceblue;
+ border-radius: 5px;
+ background-color: rgb(40, 105, 34);
+ color: aliceblue;
+}
+.reservation_div a:hover{
+font-weight: bolder;
+background-color: rgb(56, 153, 47);
+color:white !important;
 }
 
+
 /* footer */
+footer {
+  width: 100%;
+}
 .reserv {
   font-size: 22px;
   color: aliceblue;
@@ -239,8 +256,19 @@ footer {
   width: 150px;
   margin:2% auto;
 }
-/* media queries */
+/* media queries tablette */
 @media screen and (max-width: 760px) {
+  /*home*/
+  .carousel-control-prev {
+    left: 0px; 
+    width:30px;
+  }
+  
+  .carousel-control-next {
+    right: 0px; 
+    width:30px;
+  }
+  /*footer*/
   .footer_box {
     flex-wrap: wrap;
   }
@@ -260,27 +288,5 @@ footer {
   .reserv .nav-link:hover{
   color: white;
 }
-/* bouton de reservation */
-.reservation_div{
-  margin-top: 10px;
-  background-color: rgba(255, 255, 255, 0.445);
-  padding: 5px; 
-}
-.reservation_div a{
-  width : 200px;
-  font-size: 18px;
-  font-weight: 400;
- margin: auto;
- padding: 5px;
- text-align: center;
- border: solid 1px aliceblue;
- border-radius: 5px;
- background-color: rgb(40, 105, 34);
- color: aliceblue;
-}
-.reservation_div a:hover{
-font-weight: bolder;
-background-color: rgb(56, 153, 47);
-color:white !important;
-}
+
 }
