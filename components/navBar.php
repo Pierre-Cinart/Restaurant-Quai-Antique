@@ -22,7 +22,7 @@ if (file_exists($dotenvPath . '.env')) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- fichier style -->
     <link rel="stylesheet" href="../css/style.css">
-    <title><?php echo $pageTitle;?></title>
+    <title><?= "Quai-antique - " . $pageTitle;?></title>
     <title>Document</title>
 </head>
 <body>
@@ -58,27 +58,27 @@ if (file_exists($dotenvPath . '.env')) {
             </li>
             <!-- Lien vers la page de réservation de table -->
             <li class="nav-item">
-              <a href="pages/reservation.php" class="nav-link" style="font-weight: bolder;">Réserver Une Table</a>
+              <a href="reservation.php" class="nav-link" style="font-weight: bolder;">Réserver Une Table</a>
             </li>
             <?php if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']): ?>
               <!-- Si l'utilisateur est connecté, affiche un bouton pour se déconnecter -->
               <li class="nav-item">
-                <a href="pages/logout.php" class="nav-link" onclick="logout()">Se déconnecter</a>
+                <a href="logout.php" class="nav-link" onclick="logout()">Se déconnecter</a>
               </li>
               <!-- Lien vers la page de profil -->
               <li class="nav-item">
-                <a href="pages/profil.php" class="nav-link profile-link"><i class="fas fa-user"></i></a>
+                <a href="profil.php" class="nav-link profile-link"><i class="fas fa-user"></i></a>
               </li>
               <?php if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']): ?>
                 <!-- Si l'utilisateur est administrateur, affiche le lien vers le tableau de bord -->
                 <li class="nav-item">
-                  <a href="pages/dashboard.php" class="nav-link profile-link">Dashboard</a>
+                  <a href="../admin/dashboard.php" class="nav-link profile-link">Dashboard</a>
                 </li>
               <?php endif; ?>
             <?php else: ?>
               <!-- Si l'utilisateur n'est pas connecté, affiche le lien vers la page de connexion -->
               <li class="nav-item">
-                <a href="pages/authentification.php" class="nav-link">Se connecter</a>
+                <a href="authentification.php" class="nav-link">Se connecter</a>
               </li>
             <?php endif; ?>
           </ul>

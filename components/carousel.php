@@ -42,7 +42,7 @@ $images = $imageCarousel->getImages();
                     <div class="carousel-item-overlay">
                         <h3><?= $image['title'] ?></h3>
                         <p><?= $image['price'] ?> €</p>
-                        <a href="/reservation" class="btn-reserv">Réserver une table</a>
+                        <a href="./reservation.php" class="btn-reserv">Réserver une table !</a>
                     </div>
                 </div>
             </div>

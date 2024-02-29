@@ -101,7 +101,7 @@ header {
  
   max-height: 200px;
   margin: auto;
-  object-fit: cover; /* Redimensionne l'image pour remplir complètement le conteneur */
+  object-fit: cover; 
   border-radius: 5px;
   transition: opacity 0.5s ease-in-out;
 }
@@ -111,19 +111,10 @@ header {
   cursor: pointer;
 }
 
-/* bouton de reservation */
-.reservation_div{
-  margin-top: 10px;
-  background-color: rgba(255, 255, 255, 0.445);
-  padding: 5px; 
-}
-.reservation_div a{
-  width : 200px;
- margin: auto;
- padding: 5px;
- text-align: center;
- border: solid 1px black;
- border-radius: 5px;
+.btn-reserv{
+  color:white;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* footer */
@@ -174,7 +165,33 @@ footer {
   margin-top: 15px;
   width: 100%;
 }
-
+/*----------- pages ---------- */
+/* home */
+.title-box {
+  background-color: #ddae48c2; 
+  padding-top: 5px;
+  font-family: 'Dancing Script', cursive;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  border: solid 2px #523e15;
+  border-radius: 5px;
+}
+.title-box h1{
+  text-align: center;
+  font-weight: bolder;
+  color: rgb(40, 105, 34);
+}
+.title-box p {
+  font-family: 'Dancing Script', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: right;
+  padding-right: 30px;
+  font-style: italic;
+}
+/* media queries */
 @media screen and (max-width: 760px) {
   .footer_box {
     flex-wrap: wrap;
@@ -195,5 +212,27 @@ footer {
   .reserv .nav-link:hover{
   color: white;
 }
-
+/* bouton de reservation */
+.reservation_div{
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.445);
+  padding: 5px; 
+}
+.reservation_div a{
+  width : 200px;
+  font-size: 18px;
+  font-weight: 400;
+ margin: auto;
+ padding: 5px;
+ text-align: center;
+ border: solid 1px aliceblue;
+ border-radius: 5px;
+ background-color: rgb(40, 105, 34);
+ color: aliceblue;
+}
+.reservation_div a:hover{
+font-weight: bolder;
+background-color: rgb(56, 153, 47);
+color:white !important;
+}
 }

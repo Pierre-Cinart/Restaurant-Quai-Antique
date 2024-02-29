@@ -1,3 +1,5 @@
+CREATE DATABASE quai_antique;
+USE quai_antique;
 -- Création de la table des utilisateurs
 CREATE TABLE  users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
