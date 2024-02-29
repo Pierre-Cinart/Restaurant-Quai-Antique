@@ -17,9 +17,7 @@
             <a href="/carte-menus" class="nav-link">Consulter La Carte</a>
             <a href="/reservation" class="nav-link">Réserver Une Table</a>
             <a href="/authentification" class="nav-link">Créer un compte client</a>
-        </div>
-        <!-- integrer ici le composant des horraires -->
-        </div>
+        <?php require_once ('openingHours.php') ?>
 
         <div class="container text-center">
         <span>&copy; Cinartdev.fr</span>

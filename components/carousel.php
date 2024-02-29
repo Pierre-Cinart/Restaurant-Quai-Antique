@@ -6,7 +6,7 @@ class ImageCarousel {
         global $apiUrl;// apiUrl est declaré dans le composant navBar * appellé au debut de chaque pages du site
 
         // Endpoint de l'API pour récupérer les images
-        $apiEndpoint = $apiUrl . '/img_hom.php';
+        $apiEndpoint = $apiUrl . '/img_home.php';
 
         // Effectuer une requête GET à l'API
         $response = file_get_contents($apiEndpoint);
