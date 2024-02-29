@@ -17,11 +17,14 @@
             <a href="/carte-menus" class="nav-link">Consulter La Carte</a>
             <a href="/reservation" class="nav-link">Réserver Une Table</a>
             <a href="/authentification" class="nav-link">Créer un compte client</a>
-        <?php require_once ('openingHours.php') ?>
-
-        <div class="container text-center">
-        <span>&copy; Cinartdev.fr</span>
         </div>
+         <!-- horraires -->
+         <?php require_once ('openingHours.php') ?>
+       
+        </div>
+        <div class="container text-center">
+       
+       <span>&copy; Cinartdev.fr</span>
     </footer>
     <!-- cdn bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
