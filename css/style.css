@@ -7,6 +7,15 @@
     margin: 0;
     padding: 0;
 }
+/* div de séparation */
+.sep {
+  margin-top: 30px;
+  margin-bottom: 25px;
+  width: 100%;
+  border-bottom: 2px solid rgb(40, 105, 34);
+  box-shadow: 0px 0px 8px 5px rgba(40, 105, 34,0.88);
+}
+
 /* background */
 body {
   background-image: url('../images/bg_home.jpg');
@@ -190,6 +199,45 @@ footer {
   text-align: right;
   padding-right: 30px;
   font-style: italic;
+}
+/*auth Page*/
+.my-form {
+  display:flex;
+  flex-direction: column;
+  justify-content: baseline;
+  background-color: #ddae48c2;
+  border: solid 2px #523e15;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 15px;
+  padding:2%;
+  width: 80%;
+  max-width: 500px;
+}
+.my-form h2 {
+  font-size: 24px;
+  font-weight: bolder;
+  text-decoration: underline;
+  margin: auto;
+}
+.my-form form{
+  display: flex;
+  flex-direction: column;
+
+}
+.my-form form input{
+  margin:2% 2%;
+  border: 5%;
+  width:80%;
+  margin: auto;
+}
+.my-form form label{
+  font-size: 18px;
+  font-weight: bold;
+}
+.my-form form button{
+  width: 150px;
+  margin:2% auto;
 }
 /* media queries */
 @media screen and (max-width: 760px) {
