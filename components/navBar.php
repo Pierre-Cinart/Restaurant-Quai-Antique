@@ -1,6 +1,10 @@
 <?php
+// Activation du mode strict pour les variables de session
+ini_set('session.use_strict_mode', 1);
+//demarage de session
 session_start();
-
+// limitation de validité à une heure
+session_set_cookie_params(3600);
 // Charger la variables d'environnement pour le chemin vers les api à partir du fichier .env
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenvPath = __DIR__ . '/../';
