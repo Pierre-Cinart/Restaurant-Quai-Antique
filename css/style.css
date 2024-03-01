@@ -21,6 +21,11 @@ body {
   background-image: url('../images/bg_home.jpg');
   background-size: cover;
   font-family: 'Dancing Script', cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 1920px;
+  min-height: 100vh;
 }
 /* Styles CSS pour la barre de navigation */
 header {
@@ -279,8 +284,12 @@ footer {
     width: 100%;
     border: none;
     padding: 10px;
+    margin:auto;
     margin-bottom: 10px;
     border-bottom: 1px solid white;
+  }
+  .horraires h4 {
+    margin-left:2%;
   }
   .contact ul li {
     list-style: none;

@@ -36,7 +36,7 @@ if (file_exists($dotenvPath . '.env')) {
     <title><?= "Quai-antique - " . $pageTitle;?></title>
 </head>
 <body>
-<?php var_dump($_SESSION);?>
+<?php //var_dump($_SESSION);?>
   <header>
     <!-- Barre de navigation -->
     <nav class="navbar navbar-expand-lg bg-navBar">
