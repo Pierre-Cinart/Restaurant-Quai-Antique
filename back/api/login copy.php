@@ -47,7 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Authentification réussie
         //------------- delete les tentatives ----- login-attempts
 
-        require_once ('../functions/jwt.php)');
+        // Générer le JWT
+        $jwt = bin2hex(random_bytes(32)); // Utilisez 32 octets pour obtenir 64 caractères hexadécimaux
         
         // Enregistrer le JWT dans la base de données pour cet utilisateur
         $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
@@ -64,7 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
         $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
 
-      
+        // Ajouter les données de l'utilisateur à la réponse
+        $response = [
+            "id" => $user['user_id'],
+            "firstname" => $user['first_name'],
+            "lastname" => $user['last_name'],
+            "fullname" => $user['first_name'] . " " . $user['last_name'],
+            "jwt" => $jwt
+        ];
     } else {
         // Authentification échouée
         // ------------incrementer les tentatives ----- login-attempts
@@ -74,12 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Envoyer la réponse au format JSON
-    echo json_encode($_SESSION);
+    echo json_encode($response);
     
 } else {
     // Méthode de requête non autorisée
     http_response_code(405);
-    echo (["error" => "Méthode non autorisée"]);
+    echo json_encode(["error" => "Méthode non autorisée"]);
     exit();
 }
 ?>

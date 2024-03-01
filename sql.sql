@@ -10,12 +10,13 @@ CREATE TABLE  users (
     number_of_guests INT(2) ,
     picture VARCHAR(255),
     jwt VARCHAR(255),
-    confirm ENUM('n', 'y') DEFAULT 'n' NOT NULL,
     role ENUM('admin', 'client','super admin') DEFAULT 'client' NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    confirm ENUM('n', 'y') DEFAULT 'n' NOT NULL,
+    login_attemps INT,
     CHECK (number_of_guests >= 1 AND number_of_guests <= 15)
 );
 
