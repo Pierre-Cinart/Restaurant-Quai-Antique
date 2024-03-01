@@ -7,10 +7,10 @@ if (!isset($_SESSION)) {
     // Limitation de validité à une heure
     session_set_cookie_params(3600);
 }
-//démarage de la session 
+// Démarrage de la session 
 session_start();
 
-// Charger la variables d'environnement pour le chemin vers les api à partir du fichier .env
+// Charger la variable d'environnement pour le chemin vers les api à partir du fichier .env
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenvPath = __DIR__ . '/../';
 
@@ -27,12 +27,13 @@ if (file_exists($dotenvPath . '.env')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- cdn bootstrap -->
+    <!-- CDN Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- fichier style -->
+    <!-- CDN Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" />
+    <!-- Fichier style -->
     <link rel="stylesheet" href="../css/style.css">
     <title><?= "Quai-antique - " . $pageTitle;?></title>
-    <title>Document</title>
 </head>
 <body>
 <?php var_dump($_SESSION);?>
@@ -76,26 +77,25 @@ if (file_exists($dotenvPath . '.env')) {
               </li>
               <!-- Lien vers la page de profil -->
               <li class="nav-item">
-                <a href="profil.php" class="nav-link profile-link"><i class="fas fa-user"></i></a>
+                <a href="profil.php" class="nav-link profile-link loggedIn"><i class="far fa-user"></i></a>
               </li>
               <?php if(isset($_SESSION['role']) && ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'super admin')): ?>
                 <!-- Si l'utilisateur est administrateur, affiche le lien vers le tableau de bord -->
                 <li class="nav-item">
-                  <a href="../admin/dashboard.php" class="nav-link profile-link">Dashboard</a>
+                  <a href="../pages/dashboard.php" class="nav-link profile-link">Dashboard</a>
                 </li>
               <?php endif; ?>
             <?php else: ?>
               <!-- Si l'utilisateur n'est pas connecté, affiche le lien vers la page de connexion -->
               <li class="nav-item">
-                <a href="authentification.php" class="nav-link">Se connecter</a>
+                <a href="authentification.php" class="nav-link loggedOut">Se connecter</a>
               </li>
+             
             <?php endif; ?>
           </ul>
         </div>
       </div>
     </nav>
   </header>
-
-
-
-
+</body>
+</html>
