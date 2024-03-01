@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    // include_once 'login_attemps.php'; à développer
     
     // Initialiser la réponse
-    $response = [];
+    $_SESSION['response'] = "";
 
     // Récupérer l'email et le mot de passe
     $email = isset($_POST['email']) ? $_POST['email'] : null;
@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si les données du formulaire sont présentes
     if (!$email || !$password) {
         http_response_code(400); // Bad Request
-        echo json_encode(["error" => "Veuillez fournir une adresse e-mail et un mot de passe"]);
+        $_SESSION['response'] = "Veuillez fournir une adresse e-mail et un mot de passe";
+        echo $_SESSION['response'];
         exit();
     }
 
@@ -45,41 +46,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si l'utilisateur existe et si le mot de passe correspond
     if ($user && password_verify($password, $user['password'])) {
         // Authentification réussie
-        //------------- delete les tentatives ----- login-attempts
+        // verification de la validation du compte : 
+        if ($user['confirm'] == 'y'){
+              //genere un code de 64 caractères
+            $jwt = bin2hex(random_bytes(32)); 
+            
+            // Enregistrer le JWT dans la base de données pour cet utilisateur
+            $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
+            $statementUpdateJWT = $pdo->prepare($queryUpdateJWT);
+            $statementUpdateJWT->bindParam(':jwt', $jwt);
+            $statementUpdateJWT->bindParam(':user_id', $user['user_id']);
+            $statementUpdateJWT->execute();
 
-        require_once ('../functions/jwt.php)');
+            // Enregistrer les données en variable de session
         
-        // Enregistrer le JWT dans la base de données pour cet utilisateur
-        $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
-        $statementUpdateJWT = $pdo->prepare($queryUpdateJWT);
-        $statementUpdateJWT->bindParam(':jwt', $jwt);
-        $statementUpdateJWT->bindParam(':user_id', $user['user_id']);
-        $statementUpdateJWT->execute();
-
-        // Enregistrer les données en variable de session
-    
-        $_SESSION["id"] = $user['user_id'];
-        $_SESSION["firstname"] = $user['first_name'];
-        $_SESSION["lastname"] = $user['last_name'];
-        $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
-        $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
-
+            $_SESSION["id"] = $user['user_id'];
+            $_SESSION["firstname"] = $user['first_name'];
+            $_SESSION["lastname"] = $user['last_name'];
+            $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
+            $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
+            $_SESSION["isLoggedIn"] = true;
+            $_SESSION['response'] = "Compte connecté.";
+      
+        } else {
+            $_SESSION['response'] = "Votre compte n ' a pas était validé . Veuillez consulter vos mails et cliquer sur le lien de confiramtion qui vous a était envoyé ";
+            echo $_SESSION['response'];
+            exit(); 
+        }
+        //------------- delete les tentatives ----- login-attempts
       
     } else {
         // Authentification échouée
         // ------------incrementer les tentatives ----- login-attempts
         // Vous pouvez gérer cela ici en fonction de votre implémentation
         http_response_code(401); // Unauthorized
-        $response = ["error" => "Identifiants incorrects"];
+        $_SESSION['response'] = "Identifiants incorrects";
+        echo $_SESSION['response'];
     }
 
-    // Envoyer la réponse au format JSON
-    echo json_encode($_SESSION);
+    // Redirection vers la page d accueil
+    header("Location: ../../pages/home.php");
+    exit;
     
 } else {
     // Méthode de requête non autorisée
     http_response_code(405);
-    echo (["error" => "Méthode non autorisée"]);
+    $_SESSION['response'] =  "Méthode non autorisée";
+    echo $_SESSION['response'];
     exit();
 }
 ?>

@@ -1,24 +1,24 @@
 CREATE DATABASE quai_antique;
 USE quai_antique;
 -- Création de la table des utilisateurs
-CREATE TABLE  users (
+CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    tel INT(10) ,
+    tel VARCHAR(15),
     allergies VARCHAR(255),
-    number_of_guests INT(2) ,
+    number_of_guests INT(2),
     picture VARCHAR(255),
     jwt VARCHAR(255),
-    role ENUM('admin', 'client','super admin') DEFAULT 'client' NOT NULL,
+    role ENUM('admin', 'client', 'super admin') DEFAULT 'client' NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     confirm ENUM('n', 'y') DEFAULT 'n' NOT NULL,
-    login_attemps INT,
-    CHECK (number_of_guests >= 1 AND number_of_guests <= 15)
+    login_attempts INT DEFAULT 0 NOT NULL
 );
+
 
 -- Création de la table des informations des clients
 CREATE TABLE  customer_info (
