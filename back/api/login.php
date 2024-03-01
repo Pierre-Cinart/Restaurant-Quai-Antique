@@ -66,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
             $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
             $_SESSION["isLoggedIn"] = true;
+            $_SESSION["role"] = $user['role'];
             $_SESSION['response'] = "Compte connecté.";
       
         } else {

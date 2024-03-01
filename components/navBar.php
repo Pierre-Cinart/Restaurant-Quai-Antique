@@ -78,7 +78,7 @@ if (file_exists($dotenvPath . '.env')) {
               <li class="nav-item">
                 <a href="profil.php" class="nav-link profile-link"><i class="fas fa-user"></i></a>
               </li>
-              <?php if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']): ?>
+              <?php if(isset($_SESSION['role']) && ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'super admin')): ?>
                 <!-- Si l'utilisateur est administrateur, affiche le lien vers le tableau de bord -->
                 <li class="nav-item">
                   <a href="../admin/dashboard.php" class="nav-link profile-link">Dashboard</a>
