@@ -38,7 +38,7 @@ $images = $imageCarousel->getImages();
             <?php $activeClass = ($index === 0) ? 'active' : ''; ?>
             <div class="carousel-item <?= $activeClass ?>">
                 <div class="carousel-item-content">
-                    <img src="<?= "../" . $image['path'] ?>" alt="<?= $image['title'] ?>" class="d-block w-100" />
+                    <img src="<?= "../" . $image['path'] ?>" alt="<?= $image['title'] ?>" class="d-block " />
                     <div class="carousel-item-overlay">
                         <h3><?= $image['title'] ?></h3>
                         <p><?= $image['price'] ?> €</p>
