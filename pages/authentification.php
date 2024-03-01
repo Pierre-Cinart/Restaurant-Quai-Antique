@@ -11,7 +11,7 @@ require_once ('../components/navBar.php');
     <!-- Formulaire de connexion -->
 <form action="../back/api/login.php" method="POST">
     <h2>Connexion</h2>
-    <label for="email">Nom d'utilisateur :</label>
+    <label for="email">E-mail :</label>
     <input type="email" id="email" name="email" required>
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>

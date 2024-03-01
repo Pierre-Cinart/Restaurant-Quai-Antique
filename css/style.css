@@ -243,11 +243,11 @@ footer {
 
 }
 .my-form form input{
-  margin:2% 2%;
   border: 5%;
   width:80%;
   margin: auto;
 }
+
 .my-form form label{
   font-size: 18px;
   font-weight: bold;
