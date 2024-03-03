@@ -1,6 +1,6 @@
 <?php
-// Autoriser l'accès depuis n'importe quelle origine
-header("Access-Control-Allow-Origin: *");
+// Autoriser l'accès depuis des origines spécifiques 
+header("Access-Control-Allow-Origin: $webPage" . 'authentification.php');
 
 // Autoriser les en-têtes et méthodes spécifiques
 header("Access-Control-Allow-Headers: Content-Type");

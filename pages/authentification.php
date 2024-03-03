@@ -26,13 +26,13 @@ $csrfToken = $_SESSION['csrf_token'];
     <input type="password" id="password" name="password" required>
     <button class="g-recaptcha" 
         data-sitekey= "<?= $recaptchaPublic ?>"
-        data-callback='onSubmit' 
+        data-callback='onLoginSubmit' 
         data-action='submit'>Se connecter</button>
 </form>
 
 <div class="sep"></div>
 <!-- Formulaire d'inscription -->
-<form action="../back/api/register.php" method="POST">
+<form action="../back/api/register.php" method="POST" id ="registerForm">
     <h2>Inscription</h2>
     <!-- csrf token -->
     <input type="hidden" name="csrf_token" value="<?= $csrfToken; ?>"> 
@@ -46,7 +46,10 @@ $csrfToken = $_SESSION['csrf_token'];
     <input type="password" id="new_password" name="new_password" required>
     <label for="confirm_password">Confirmer le mot de passe :</label>
     <input type="password" id="confirm_password" name="confirm_password" required>
-    <button type="submit">S'inscrire</button>
+    <button class="g-recaptcha" 
+        data-sitekey= "<?= $recaptchaPublic ?>"
+        data-callback='onRegisterSubmit' 
+        data-action='submit'>S'inscrire'</button>
 </form>
 </div>
 
@@ -56,8 +59,11 @@ require_once ('../components/footer.php');
  <script async src="https://www.google.com/recaptcha/api.js"></script>
  
  <script>
-   function onSubmit(token) {
+   function onLoginSubmit(token) {
      document.getElementById("loginForm").submit();
+   }
+   function onRegisterSubmit(token) {
+    document.getElementById("registerForm").submit();
    }
  </script>
 </body>

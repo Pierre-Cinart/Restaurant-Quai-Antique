@@ -44,6 +44,7 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 
 3. Pour l envoie de mail en local , créez un compte sur mailtrap : https://mailtrap.io/ et récupérez vos informations de connexions
 
+4. Pour la vérification anti-bot sur les formulaires , créez un compte sur google-recaptcha : https://www.google.com/recaptcha et récupérez vos clés client et serveur 
 ## Configurations de connexion
 
 ### Backend (PHP)
@@ -61,15 +62,26 @@ Ce fichier sert uniquement d exemple il peut ensuite être supprimé
 - **Nom d'utilisateur:** Le nom d'utilisateur SMTP de Mailtrap (SMTP_USERNAME dans le fichier `.env`).
 - **Mot de passe:** Le mot de passe SMTP de Mailtrap (SMTP_PASSWORD dans le fichier `.env`).
 
+### Google Recaptcha
+- **clé client:** (RECAPTCHA_PUBLIC dans le fichier `.env`).
+- **clé serveur:** (RECAPTCHA_PRIVATE dans le fichier `.env`) .
+
 ### Frontend 
 
-- **URL de l'API Backend:** Configurer l'URL des API backend dans le fichier `.env` 
+- **URL de l'API Backend:** Configurez l'URL des API backend dans le fichier `.env` (API_URL)
 
    Exemple de fichier `.env` :
    ```env
    API_URL=http://localhost/back/api
    ```
+### Backend 
 
+- **URL de pour configurer le header Access-Control-Allow-Origin: des API :** Configurez l'URL  dans le fichier `.env` (WEB_URL)
+
+   Exemple de fichier `.env` :
+   ```env
+   WEB_URL=http://localhost/Restaurant-Quai-Antique/pages/
+   ```
 
 
 

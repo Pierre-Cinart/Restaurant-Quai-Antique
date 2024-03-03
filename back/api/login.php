@@ -16,7 +16,7 @@ if (file_exists($dotenvPath . '.env')) {
   $webPage = $_ENV['WEB_URL'];
   $recaptchaPrivate = $_ENV['RECAPTCHA_PRIVATE'];
 }
-// Autoriser l'accès depuis des origines spécifiques (ajustez selon vos besoins)
+// Autoriser l'accès depuis des origines spécifiques 
 header("Access-Control-Allow-Origin: $webPage" . 'authentification.php');
 // Autoriser les en-têtes et méthodes spécifiques
 header("Access-Control-Allow-Headers: Content-Type");
