@@ -1,7 +1,22 @@
 <?php
-// Autoriser l'accès depuis n'importe quelle origine
-header("Access-Control-Allow-Origin: *");
 
+//chemin de vendor autoload
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+// Chemin du fichier .env
+$dotenvPath = __DIR__ . '/../../';
+
+// Vérifier si le fichier .env existe
+if (file_exists($dotenvPath . '.env')) {
+    // Charger les variables d'environnement depuis le fichier .env
+    $dotenv = Dotenv\Dotenv::createImmutable($dotenvPath);
+    $dotenv->load();
+
+  // Utiliser les variables d'environnement
+  $webPage = $_ENV['WEB_URL'];
+}
+// Autoriser l'accès depuis des origines spécifiques (ajustez selon vos besoins)
+header("Access-Control-Allow-Origin: $webPage" . 'authentification.php');
 // Autoriser les en-têtes et méthodes spécifiques
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -13,10 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+
 // Vérifier si la méthode de la requête est POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inclure le fichier bdd.php pour établir une connexion à la base de données
     require_once 'bdd.php';
+    // Vérifier le jeton CSRF
+    echo $_POST['csrf_token'];
+    var_dump($_SESSION);
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    http_response_code(403); // Forbidden
+    $_SESSION['response'] = "Token CSRF invalide";
+    echo $_SESSION['response'];
+    exit();
+}
+
    // include_once 'login_attemps.php'; à développer
     
     // Initialiser la réponse
@@ -34,6 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+        // Validation de l'email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400); // Bad Request
+        $_SESSION['response'] = "L'adresse e-mail n'est pas valide";
+        echo $_SESSION['response'];
+        exit();
+    }
     ///--------------- mettre un exit si le nombre de requête est supérieur à 5 ----- login-attempts
 
     // Requête pour récupérer l'utilisateur avec l'email
