@@ -15,19 +15,26 @@ $csrfToken = $_SESSION['csrf_token'];
 
 <div class="my-form">
     <!-- Formulaire de connexion -->
-<form action="../back/api/login.php" method="POST">
+<form action="../back/api/login.php" method="POST" id="loginForm">
     <h2>Connexion</h2>
+    <!-- recaptcha -->
+    
     <input type="hidden" name="csrf_token" value="<?= $csrfToken; ?>"> 
     <label for="email">E-mail :</label>
     <input type="email" id="email" name="email" required>
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
-    <button type="submit">Se connecter</button>
+    <button class="g-recaptcha" 
+        data-sitekey= "<?= $recaptchaPublic ?>"
+        data-callback='onSubmit' 
+        data-action='submit'>Se connecter</button>
 </form>
+
 <div class="sep"></div>
 <!-- Formulaire d'inscription -->
 <form action="../back/api/register.php" method="POST">
     <h2>Inscription</h2>
+    <!-- csrf token -->
     <input type="hidden" name="csrf_token" value="<?= $csrfToken; ?>"> 
     <label for="first_name">Prénom :</label>
     <input type="text" id="first_name" name="first_name" required>
@@ -35,8 +42,8 @@ $csrfToken = $_SESSION['csrf_token'];
     <input type="text" id="last_name" name="last_name" required>
     <label for="mail">mail :</label>
     <input type="email" id="mail" name="mail" required>
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" required>
+    <label for="new_password">Mot de passe :</label>
+    <input type="password" id="new_password" name="new_password" required>
     <label for="confirm_password">Confirmer le mot de passe :</label>
     <input type="password" id="confirm_password" name="confirm_password" required>
     <button type="submit">S'inscrire</button>
@@ -44,8 +51,14 @@ $csrfToken = $_SESSION['csrf_token'];
 </div>
 
 <?php 
-
-// import du footer !!!! obligatoire pour fermer le html
 require_once ('../components/footer.php');
-
 ?>
+ <script async src="https://www.google.com/recaptcha/api.js"></script>
+ 
+ <script>
+   function onSubmit(token) {
+     document.getElementById("loginForm").submit();
+   }
+ </script>
+</body>
+</html>

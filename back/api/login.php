@@ -14,6 +14,7 @@ if (file_exists($dotenvPath . '.env')) {
 
   // Utiliser les variables d'environnement
   $webPage = $_ENV['WEB_URL'];
+  $recaptchaPrivate = $_ENV['RECAPTCHA_PRIVATE'];
 }
 // Autoriser l'accès depuis des origines spécifiques (ajustez selon vos besoins)
 header("Access-Control-Allow-Origin: $webPage" . 'authentification.php');
@@ -33,9 +34,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inclure le fichier bdd.php pour établir une connexion à la base de données
     require_once 'bdd.php';
+// Récupérer la réponse reCAPTCHA du formulaire
+if (isset($_POST['g-recaptcha-response'])){
+    $captchaResponse = $_POST['g-recaptcha-response'];
+} else {
+    $_SESSION['response'] = "erreur de clé recaptcha";
+    echo $_SESSION['response'];
+    exit();
+}
+
+
+// Envoyer une requête POST pour vérifier la réponse reCAPTCHA
+$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+$data = [
+    'secret' => $recaptchaPrivate, // Votre clé privée reCAPTCHA
+    'response' => $captchaResponse
+];
+
+$options = [
+    'http' => [
+        'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+        'method' => 'POST',
+        'content' => http_build_query($data)
+    ]
+];
+
+$context = stream_context_create($options);
+$response = file_get_contents($verifyUrl, false, $context);
+$recaptchaResult = json_decode($response);
+
+// Vérifier si la réponse reCAPTCHA est valide
+if (!$recaptchaResult->success) {
+    $_SESSION['response'] = "RECAPCTCHA DETECT BOT";
+    echo $_SESSION['response'];
+    exit();
+} 
     // Vérifier le jeton CSRF
-    echo $_POST['csrf_token'];
-    var_dump($_SESSION);
 if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     http_response_code(403); // Forbidden
     $_SESSION['response'] = "Token CSRF invalide";

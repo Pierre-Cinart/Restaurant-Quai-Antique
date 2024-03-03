@@ -37,3 +37,5 @@ $guests = 'info client ';
 require_once ('../components/footer.php');
 
 ?>
+</body>
+</html>

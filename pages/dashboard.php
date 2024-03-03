@@ -14,3 +14,5 @@ require_once ('../components/navBar.php');
 require_once ('../components/footer.php');
 
 ?>
+</body>
+</html>

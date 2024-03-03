@@ -19,6 +19,7 @@ if (file_exists($dotenvPath . '.env')) {
     $dotenv->load();
   // Utiliser la variable d'environnement
   $apiUrl = $_ENV['API_URL'];
+  $recaptchaPublic = $_ENV['RECAPTCHA_PUBLIC'];
 }
 ?>
 
@@ -34,6 +35,13 @@ if (file_exists($dotenvPath . '.env')) {
     <!-- Fichier style -->
     <link rel="stylesheet" href="../css/style.css">
     <title><?= "Quai-antique - " . $pageTitle;?></title>
+    <!-- intégrer google captcha sur les pages où cela est nécessaire -->
+    <?php
+      if ($pageTitle == 'Authentification') {
+        echo '<script async src="https://www.google.com/recaptcha/api.js"></script>';
+         
+      }
+    ?>
 </head>
 <body>
 <?php //var_dump($_SESSION);?>
@@ -97,5 +105,5 @@ if (file_exists($dotenvPath . '.env')) {
       </div>
     </nav>
   </header>
-</body>
-</html>
+
+
