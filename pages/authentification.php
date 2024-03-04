@@ -42,6 +42,10 @@ $csrfToken = $_SESSION['csrf_token'];
     <input type="text" id="last_name" name="last_name" required>
     <label for="mail">mail :</label>
     <input type="email" id="mail" name="mail" required>
+    <label for="tel">Téléphone  :</label>
+    <input type="text" id="tel" name="tel" >
+    <label for="allergies">Allergies  :</label>
+    <input type="text" id="allergies" name="allergies">
     <label for="new_password">Mot de passe :</label>
     <input type="password" id="new_password" name="new_password" required>
     <label for="confirm_password">Confirmer le mot de passe :</label>
