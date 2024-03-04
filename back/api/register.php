@@ -74,15 +74,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $_SESSION['response'];
         exit();
     }
-    // récupérer les données du formulaire
+    // récupérer les données du formulaire //
     $firstname = isset($_POST['first_name']) ? $_POST['first_name'] : null;
     $lastname = isset($_POST['last_name']) ? $_POST['last_name'] : null;
     $mail = isset($_POST['mail']) ? $_POST['mail'] : null;
-    $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
-    $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
     $tel = isset($_POST['tel']) ? $_POST['tel'] : null;
     $allergies = isset($_POST['allergies']) ? $_POST['allergies'] : null;
-
+    $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
+    $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
+    
+    //traiter les données reçues => //regex tel nom prenom password capturer les erreurs et renvoyer les erreurs en message
+    //envoyer les données echapées 
     
 } else {
     // Méthode de requête non autorisée
