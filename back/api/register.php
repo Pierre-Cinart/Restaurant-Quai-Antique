@@ -1,5 +1,7 @@
 <?php
-
+//importation de php mailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 //chemin de vendor autoload
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -15,6 +17,12 @@ if (file_exists($dotenvPath . '.env')) {
   // Utiliser les variables d'environnement
   $webPage = $_ENV['WEB_URL'];
   $recaptchaPrivate = $_ENV['RECAPTCHA_PRIVATE'];
+  $smtpHost = $_ENV['SMTP_HOST'];
+  $smtpPort = $_ENV['SMTP_PORT'];
+  $smtpUser = $_ENV['SMTP_USERNAME'];
+  $smtpPassword= $_ENV['SMTP_PASSWORD'];
+  $apiUrl = $_ENV['API_URL'];
+
 }
 // Autoriser l'accès depuis des origines spécifiques 
 header("Access-Control-Allow-Origin: $webPage" . 'authentification.php');
@@ -77,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // récupérer les données du formulaire //
     $firstname = isset($_POST['first_name']) ? $_POST['first_name'] : null;
     $lastname = isset($_POST['last_name']) ? $_POST['last_name'] : null;
-    $mail = isset($_POST['mail']) ? $_POST['mail'] : null;
+    $email = isset($_POST['mail']) ? $_POST['mail'] : null;
     $tel = isset($_POST['tel']) ? $_POST['tel'] : null;
     $allergies = isset($_POST['allergies']) ? $_POST['allergies'] : null;
     $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
@@ -85,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
    
     // Validation du format de l'email
-    if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         http_response_code(400); // Bad Request
         $_SESSION['response'] = "L'adresse e-mail n'est pas valide.";
         echo $_SESSION['response'];
@@ -94,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si l'email existe déjà dans la base de données
     $queryEmailCheck = "SELECT * FROM users WHERE email = :email";
     $statementEmailCheck = $pdo->prepare($queryEmailCheck);
-    $statementEmailCheck->bindParam(':email', $mail);
+    $statementEmailCheck->bindParam(':email', $email);
     $statementEmailCheck->execute();
     $existingUser = $statementEmailCheck->fetch(PDO::FETCH_ASSOC);
 
@@ -150,19 +158,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     //vérifications terminée inscritpion des données en base de données
     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+     //genere un code de 64 caractères
+     $jwt = bin2hex(random_bytes(32)); //servira pour la vérification de mail 
+   
     // Insérer les données dans la table user
-    $queryInsertUser = "INSERT INTO users (first_name, last_name, email, tel, allergies, password) VALUES (:first_name, :last_name, :email, :tel, :allergies, :password)";
+    $queryInsertUser = "INSERT INTO users (first_name, last_name, email, tel, allergies, password , jwt) VALUES (:first_name, :last_name, :email, :tel, :allergies, :password , :jwt)";
     $statementInsertUser = $pdo->prepare($queryInsertUser);
     $statementInsertUser->bindParam(':first_name', $firstname);
     $statementInsertUser->bindParam(':last_name', $lastname);
-    $statementInsertUser->bindParam(':email', $mail);
+    $statementInsertUser->bindParam(':email', $email);
     $statementInsertUser->bindParam(':tel', $tel);
     $statementInsertUser->bindParam(':allergies', $allergies);
-    $statementInsertUser->bindParam(':password', $hashed_password); // Stocker le mot de passe hashé
+    $statementInsertUser->bindParam(':password', $hashed_password); 
+    $statementInsertUser->bindParam(':jwt', $jwt);
     $statementInsertUser->execute();
+    // envoie du message de confirmation 
+    // Configurer PHPMailer
+    $mail = new PHPMailer(true);
+    try {
+        // Paramètres SMTP de Mailtrap
+        $mail->isSMTP();
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->Port = $_ENV['SMTP_PORT'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USERNAME'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilisez STARTTLS pour le chiffrement TLS
+        $mail->CharSet = 'UTF-8'; // Définit l'encodage des caractères
+        $mail->ContentType = 'text/html; charset=UTF-8'; // Spécifie le type de contenu et l'encodage
+        // Destinataire et expéditeur
+        $mail->setFrom('quai-antique@noreply.mail', 'Arnaud Michant');
+        $mail->addAddress($email, $firstname . ' ' . $lastname);
 
+        // Contenu de l'e-mail
+        $mail->isHTML(true);
+        $mail->Subject = 'confirmation de compte';
+        $mail->Body = "<!DOCTYPE html><html><head><meta charset='UTF-8'></head><body>Vous avez créé un compte sur notre site Quai antique. Veuillez cliquer sur le lien ci-dessous pour valider votre inscription : <a href='$apiUrl/verif.php?code=$jwt'>CONFIRMER LE COMPTE</a></body></html>";
+        
+
+        // Envoyer l'e-mail
+        $mail->send();
+   
+    } catch (Exception $e) {
+        echo 'Échec de l\'envoi de l\'e-mail. Erreur : ', $e->getMessage();
+        exit();
+    }
     // Définir le message de réponse dans la session
-    $_SESSION['response'] = "Votre compte a bien été enregistré. Un mail de confirmation vous a été envoyé à $mail. Veuillez cliquer sur le lien s'y trouvant pour confirmer votre inscription. Merci et à bientôt ;)";
+    $_SESSION['response'] = "Votre compte a bien été enregistré. Un mail de confirmation vous a été envoyé à " . $email . ". Veuillez cliquer sur le lien s'y trouvant pour confirmer votre inscription. Merci et à bientôt ;)";
     echo  $_SESSION['response'];
         
         

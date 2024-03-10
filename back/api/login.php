@@ -117,7 +117,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
             exit(); 
         }
         // vérification de nombre de tentatives de connexion sur cette address mail
-        if ($user['login_attempts'] >= 5){
+        if ($user['login_attemps'] >= 5){
             $_SESSION['response'] = "Suite à un trop grand nombre de tentative . Votre compte à était vérrouillé . Un lien de réinitialisation de mot de passe vous à était envoyé par mail ";
             exit(); 
         }
@@ -135,9 +135,8 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
           $statementUpdateJWT->execute();
 
           //remettre à zéro les tentatives de connexion sur ce compte
-          $queryUpdateLogin = "UPDATE users SET login_attemps = :lg WHERE user_id = :user_id";
+          $queryUpdateLogin = "UPDATE users SET login_attemps = 0 WHERE user_id = :user_id";
           $statementUpdateLogin = $pdo->prepare($queryUpdateLogin);
-          $statementUpdateLogin->bindParam(':lg', 0);
           $statementUpdateLogin->bindParam(':user_id', $user['user_id']);
           $statementUpdateLogin->execute();
 
