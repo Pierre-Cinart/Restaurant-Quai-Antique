@@ -77,8 +77,6 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
     exit();
 }
 
-   // include_once 'login_attemps.php'; à développer
-    
     // Initialiser la réponse
     $_SESSION['response'] = "";
 
@@ -101,9 +99,9 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
         echo $_SESSION['response'];
         exit();
     }
-    ///--------------- mettre un exit si le nombre de requête est supérieur à 5 ----- login-attempts
+  
 
-    // Requête pour récupérer l'utilisateur avec l'email
+    // Requête pour récupérer l'utilisateur avec l'email dans la variable $user
     $query = "SELECT * FROM users WHERE email = :email";
     $statement = $pdo->prepare($query);
     $statement->bindParam(':email', $email);
@@ -114,39 +112,60 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
     if ($user && password_verify($password, $user['password'])) {
         // Authentification réussie
         // verification de la validation du compte : 
-        if ($user['confirm'] == 'y'){
-              //genere un code de 64 caractères
-            $jwt = bin2hex(random_bytes(32)); 
-            
-            // Enregistrer le JWT dans la base de données pour cet utilisateur
-            $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
-            $statementUpdateJWT = $pdo->prepare($queryUpdateJWT);
-            $statementUpdateJWT->bindParam(':jwt', $jwt);
-            $statementUpdateJWT->bindParam(':user_id', $user['user_id']);
-            $statementUpdateJWT->execute();
-
-            // Enregistrer les données en variable de session
-        
-            $_SESSION["id"] = $user['user_id'];
-            $_SESSION["firstname"] = $user['first_name'];
-            $_SESSION["lastname"] = $user['last_name'];
-            $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
-            $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
-            $_SESSION["isLoggedIn"] = true;
-            $_SESSION["role"] = $user['role'];
-            $_SESSION['response'] = "Compte connecté.";
-      
-        } else {
+        if ($user['confirm'] == 'n'){
             $_SESSION['response'] = "Votre compte n ' a pas était validé . Veuillez consulter vos mails et cliquer sur le lien de confiramtion qui vous a était envoyé ";
-            echo $_SESSION['response'];
             exit(); 
         }
+        // vérification de nombre de tentatives de connexion sur cette address mail
+        if ($user['login_attempts'] >= 5){
+            $_SESSION['response'] = "Suite à un trop grand nombre de tentative . Votre compte à était vérrouillé . Un lien de réinitialisation de mot de passe vous à était envoyé par mail ";
+            exit(); 
+        }
+        // fin des vérifications 
+        // établissement de la connexion 
+
+          //genere un code de 64 caractères
+          $jwt = bin2hex(random_bytes(32)); 
+            
+          // Enregistrer le JWT dans la base de données pour cet utilisateur
+          $queryUpdateJWT = "UPDATE users SET jwt = :jwt WHERE user_id = :user_id";
+          $statementUpdateJWT = $pdo->prepare($queryUpdateJWT);
+          $statementUpdateJWT->bindParam(':jwt', $jwt);
+          $statementUpdateJWT->bindParam(':user_id', $user['user_id']);
+          $statementUpdateJWT->execute();
+
+          //remettre à zéro les tentatives de connexion sur ce compte
+          $queryUpdateLogin = "UPDATE users SET login_attemps = :lg WHERE user_id = :user_id";
+          $statementUpdateLogin = $pdo->prepare($queryUpdateLogin);
+          $statementUpdateLogin->bindParam(':lg', 0);
+          $statementUpdateLogin->bindParam(':user_id', $user['user_id']);
+          $statementUpdateLogin->execute();
+
+          // Enregistrer les données en variable de session
+      
+          $_SESSION["id"] = $user['user_id'];
+          $_SESSION["firstname"] = $user['first_name'];
+          $_SESSION["lastname"] = $user['last_name'];
+          $_SESSION["fullname"] = $user['first_name'] . " " . $user['last_name'];
+          $_SESSION["jwt"] = $jwt; // Ajouter le JWT à la réponse
+          $_SESSION["isLoggedIn"] = true;
+          $_SESSION["role"] = $user['role'];
+          $_SESSION['response'] = "Compte connecté.";
+            
+      
+       
         //------------- delete les tentatives ----- login-attempts
       
     } else {
         // Authentification échouée
-        // ------------incrementer les tentatives ----- login-attempts
-        // Vous pouvez gérer cela ici en fonction de votre implémentation
+        // ------------incrementer les tentatives ----- 
+        $lg = $user['login_attempts'] + 1;
+        $queryUpdateLogin = "UPDATE users SET login_attemps = :lg WHERE user_id = :user_id";
+        $statementUpdateLogin = $pdo->prepare($queryUpdateLogin);
+        $statementUpdateLogin->bindParam(':lg', $lg );
+        $statementUpdateLogin->bindParam(':user_id', $user['user_id']);
+        $statementUpdateLogin->execute();
+
         http_response_code(401); // Unauthorized
         $_SESSION['response'] = "Identifiants incorrects";
         echo $_SESSION['response'];
