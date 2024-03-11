@@ -42,6 +42,8 @@
         window.location.href = 'logout.php';
     }
 </script>
+<!-- script pour affichage des popup -->
+<script src="../js/popUp.js"></script>
 <!-- vérification recaptcha  -->
 <?php 
     if ($pageTitle == 'Authentification') {
@@ -55,5 +57,4 @@
         </script>";
     }
 ?>
-</body>
-</html>
+

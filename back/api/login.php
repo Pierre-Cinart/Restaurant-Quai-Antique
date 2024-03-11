@@ -39,7 +39,7 @@ if (isset($_POST['g-recaptcha-response'])){
     $captchaResponse = $_POST['g-recaptcha-response'];
 } else {
     $_SESSION['response'] = "erreur de clé recaptcha";
-    echo $_SESSION['response'];
+    $_SESSION['type'] ='error';
     exit();
 }
 
@@ -66,14 +66,14 @@ $recaptchaResult = json_decode($response);
 // Vérifier si la réponse reCAPTCHA est valide
 if (!$recaptchaResult->success) {
     $_SESSION['response'] = "RECAPCTCHA DETECT BOT";
-    echo $_SESSION['response'];
+    $_SESSION['type'] ='error';
     exit();
 } 
     // Vérifier le jeton CSRF
 if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     http_response_code(403); // Forbidden
     $_SESSION['response'] = "Token CSRF invalide";
-    echo $_SESSION['response'];
+    $_SESSION['type'] ='error';
     exit();
 }
 
@@ -88,7 +88,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
     if (!$email || !$password) {
         http_response_code(400); // Bad Request
         $_SESSION['response'] = "Veuillez fournir une adresse e-mail et un mot de passe";
-        echo $_SESSION['response'];
+        $_SESSION['type'] = 'error';
         exit();
     }
 
@@ -96,7 +96,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         http_response_code(400); // Bad Request
         $_SESSION['response'] = "L'adresse e-mail n'est pas valide";
-        echo $_SESSION['response'];
+        $_SESSION['type'] = 'error';
         exit();
     }
   
@@ -113,8 +113,9 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
         // Authentification réussie
         // verification de la validation du compte : 
         if ($user['confirm'] == 'n'){
-            $_SESSION['response'] = "Votre compte n ' a pas était validé . Veuillez consulter vos mails et cliquer sur le lien de confiramtion qui vous a était envoyé ";
-            echo $_SESSION['response'];
+            $_SESSION['response'] = "Votre compte n ' a pas était validé . \nVeuillez consulter vos mails et cliquer sur le lien de confirmation qui vous a était envoyé ";
+            $_SESSION['type'] = 'error';
+            header("Location: ../../pages/authentification.php");
             exit(); 
         }
          // ------------incrementer les tentatives ----- 
@@ -128,7 +129,8 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
         // vérification de nombre de tentatives de connexion sur cette address mail
         if ($user['login_attemps'] >= 5){
             $_SESSION['response'] = "Suite à un trop grand nombre de tentative . Votre compte à était vérrouillé . Un lien de réinitialisation de mot de passe vous à était envoyé par mail ";
-            echo $_SESSION['response'];
+            $_SESSION['type'] = 'error';
+            header("Location: ../../pages/authentification.php");
             exit(); 
         }
         // fin des vérifications 
@@ -160,8 +162,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
           $_SESSION["isLoggedIn"] = true;
           $_SESSION["role"] = $user['role'];
           $_SESSION['response'] = "Compte connecté.";
-            
-      
+          $_SESSION['type'] = 'success';
        
         //------------- delete les tentatives ----- login-attempts
       
@@ -170,7 +171,8 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
        
         http_response_code(401); // Unauthorized
         $_SESSION['response'] = "Identifiants incorrects";
-        echo $_SESSION['response'];
+        $_SESSION['type'] = 'error';
+        header("Location: ../../pages/authentification.php");
         exit();
     }
 
@@ -182,7 +184,8 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
     // Méthode de requête non autorisée
     http_response_code(405);
     $_SESSION['response'] =  "Méthode non autorisée";
-    echo $_SESSION['response'];
+    $_SESSION['type'] = 'error';
+    header("Location: ../../pages/authentification.php");
     exit();
 }
 ?>

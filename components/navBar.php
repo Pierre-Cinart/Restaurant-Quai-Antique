@@ -37,10 +37,10 @@ if (file_exists($dotenvPath . '.env')) {
     <title><?= "Quai-antique - " . $pageTitle;?></title>
     <!-- intégrer google captcha sur les pages où cela est nécessaire -->
     <?php
-      if ($pageTitle == 'Authentification') {
-        echo '<script async src="https://www.google.com/recaptcha/api.js"></script>';
+      // if ($pageTitle == 'Authentification') {
+      //   echo '<script async src="https://www.google.com/recaptcha/api.js"></script>';
          
-      }
+      // }
     ?>
 </head>
 <body>
@@ -105,5 +105,11 @@ if (file_exists($dotenvPath . '.env')) {
       </div>
     </nav>
   </header>
+ 
+    <?php
+      //import de la box popUP;
+      require_once ('../components/popUp.php');
+    ?>
+
 
 

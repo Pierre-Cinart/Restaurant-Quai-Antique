@@ -15,7 +15,27 @@
   border-bottom: 2px solid rgb(40, 105, 34);
   box-shadow: 0px 0px 8px 5px rgba(40, 105, 34,0.88);
 }
+/*Popup */
+#popUp {
+  width: 55%;
+  margin: 10px auto;
+  padding: 5%;
+  color : white;
+  border-radius: 5px;
+  border:solid 1px black;
+  text-align: center;
+  font-size: 20px;
+}
 
+.success {
+  background-color: green;
+}
+.error {
+  background-color: red;
+}
+.none {
+  display: none !important;
+}
 /* background */
 body {
   background-image: url('../images/bg_home.jpg');
