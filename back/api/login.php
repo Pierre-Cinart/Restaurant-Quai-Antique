@@ -114,11 +114,21 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
         // verification de la validation du compte : 
         if ($user['confirm'] == 'n'){
             $_SESSION['response'] = "Votre compte n ' a pas était validé . Veuillez consulter vos mails et cliquer sur le lien de confiramtion qui vous a était envoyé ";
+            echo $_SESSION['response'];
             exit(); 
         }
+         // ------------incrementer les tentatives ----- 
+         $lg = $user['login_attempts'] + 1;
+         $queryUpdateLogin = "UPDATE users SET login_attemps = :lg WHERE user_id = :user_id";
+         $statementUpdateLogin = $pdo->prepare($queryUpdateLogin);
+         $statementUpdateLogin->bindParam(':lg', $lg );
+         $statementUpdateLogin->bindParam(':user_id', $user['user_id']);
+         $statementUpdateLogin->execute();
+ 
         // vérification de nombre de tentatives de connexion sur cette address mail
         if ($user['login_attemps'] >= 5){
             $_SESSION['response'] = "Suite à un trop grand nombre de tentative . Votre compte à était vérrouillé . Un lien de réinitialisation de mot de passe vous à était envoyé par mail ";
+            echo $_SESSION['response'];
             exit(); 
         }
         // fin des vérifications 
@@ -157,22 +167,16 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['c
       
     } else {
         // Authentification échouée
-        // ------------incrementer les tentatives ----- 
-        $lg = $user['login_attempts'] + 1;
-        $queryUpdateLogin = "UPDATE users SET login_attemps = :lg WHERE user_id = :user_id";
-        $statementUpdateLogin = $pdo->prepare($queryUpdateLogin);
-        $statementUpdateLogin->bindParam(':lg', $lg );
-        $statementUpdateLogin->bindParam(':user_id', $user['user_id']);
-        $statementUpdateLogin->execute();
-
+       
         http_response_code(401); // Unauthorized
         $_SESSION['response'] = "Identifiants incorrects";
         echo $_SESSION['response'];
+        exit();
     }
 
     // Redirection vers la page d accueil
     header("Location: ../../pages/home.php");
-    exit;
+    exit();
     
 } else {
     // Méthode de requête non autorisée
