@@ -1,6 +1,7 @@
 const popUp = document.getElementById('popUp');
 show = 0;
 function affPopUp () {
+    if (popUp == null) {return;}
     if (show === 0 && popUp.classList.contains('none')) {
         popUp.classList.remove("none");
     }

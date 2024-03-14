@@ -10,7 +10,9 @@
         unset($_SESSION['response']);
         unset($_SESSION['type']);
   }
+
     ?>
+
     
 
     
