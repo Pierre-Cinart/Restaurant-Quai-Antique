@@ -20,9 +20,14 @@ require_once ('../components/navBar.php');
         <div id = "drinks">
           <img src='../images/drinks/drinks.jpg' >
         </div>
-        <div id="starters"></div>
+        <div id="starters">
+            <p>starters</p>
+        </div>
         <div id="dishes"></div>
-        <div id="desserts"></div>
+            <p>dishes</p>
+        <div id="desserts">
+            <p>desserts</p>
+        </div>
       </div>
     </section>
   </div>

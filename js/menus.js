@@ -6,40 +6,59 @@ const dishes = document.getElementById('dishes');
 const desserts = document.getElementById('desserts');
 
 // fonction de tri sur les titres
-function filterMenu(menu) {
-    console.log("menu selectionné : " + menu);
-    if (menu == 'all') {
-        showMenu('drinks');
-        showMenu('starters');
-        showMenu('dishes');
-        showMenu('desserts');
-    } else {
-        showMenu(menu);
+function filterMenu(str_menu) { // string en param lancé sur le html cartes-menus.php
+    console.log("menu selectionné : " + str_menu);
+    switch (str_menu) {
+        case 'all': {
+            showMenu(drinks);
+            showMenu(starters);
+            showMenu(dishes);
+            showMenu(desserts);
+        }
+        break;
+        case 'drinks': {
+            showMenu(drinks);
+            maskMenu(starters);
+            maskMenu(dishes);
+            maskMenu(desserts);
+        } 
+        break;
+        case 'starters': {
+            showMenu(starters);
+            maskMenu(drinks);
+            maskMenu(dishes);
+            maskMenu(desserts);
+        } 
+        break;
+        case 'dishes': {
+            showMenu(dishes);
+            maskMenu(drinks);
+            maskMenu(starters);
+            maskMenu(desserts);
+        } 
+        break;
+        case 'desserts': {
+            showMenu(desserts);
+            maskMenu(starters);
+            maskMenu(drinks);
+            maskMenu(dishes);
+            
+        } 
+        break;
     }
+    
 }
 
 // fonction  d affichage des menus
 function showMenu(menu) {
-    switch (menu) {
-        case 'drinks': {
-            if (drinks.classList.contains('none')){
-                drinks.classList.remove('none');
-            }
-        } break;
-        case 'starters': {
-                if (starters.classList.contains('none')){
-                    starters.classList.remove('none');
-                } 
-        } break;
-        case 'dishes': {
-            if (dishes.classList.contains('none')){
-                dishes.classList.remove('none');
-            } 
-        } break;
-        case 'desserts': {
-            if (desserts.classList.contains('none')){
-                desserts.classList.remove('none');
-            } 
-        } break;
-    }
+    if (menu.classList.contains('none')){
+        menu.classList.remove('none');
+    } 
+}
+
+//fonction de masquage des menus 
+function maskMenu (menu) {
+    if (!menu.classList.contains('none')){
+        menu.classList.add('none');
+    } 
 }
