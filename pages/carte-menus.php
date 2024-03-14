@@ -14,5 +14,6 @@ require_once ('../components/navBar.php');
 require_once ('../components/footer.php');
 
 ?>
+<script src="../js/menu.js"></script>
 </body>
 </html>

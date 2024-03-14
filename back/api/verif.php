@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             
             // La mise à jour a été effectuée avec succès
             $_SESSION['response']  = "La confirmation du compte a été effectuée avec succès.";
-            echo $_SESSION['response'];
+            $_SESSION['type'] = 'success';
         } else {
             // envoie d 'un nouveau lien de confirmation et mise à jours de users
             $updateQuery = "UPDATE users SET jwt = :jwt, updated_at = NOW() WHERE email = :email";
@@ -96,17 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
            
             } catch (Exception $e) {
                 $_SESSION['response']  = 'Échec de l\'envoi de l\'e-mail. Erreur : '.  $e->getMessage();
-                echo $_SESSION['response'];
+                $_SESSION['type'] = 'error';
                 exit();
             }
             // Le délai pour la confirmation du compte a expiré
             $_SESSION['response']  = "Le délai pour la confirmation du compte a expiré.\n Un nouveau message de confirmation vous à était envoyé sur votre adresse mail \n veuillez suivre les instructions de celui ci pour confirmer votre inscription";
-            echo $_SESSION['response'];
+            $_SESSION['type'] = 'error';
         }
     } else {
         // Aucun utilisateur trouvé avec le code donné
         $_SESSION['response']  = "Code invalide.";
-        echo $_SESSION['response'];
+        $_SESSION['type'] = 'error';
     }
         exit();
 }
