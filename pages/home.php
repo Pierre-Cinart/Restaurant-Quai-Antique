@@ -3,8 +3,7 @@
         $pageTitle = 'Accueil';
         //import de navBar et session_start() obligatoire pour ouverture html
         require_once ('../components/navBar.php');
-        //import de la box popUP;
-        require_once ('../components/popUp.php');
+        
 ?>
 <!-- titre entête -->
  <div class = "title-box">
